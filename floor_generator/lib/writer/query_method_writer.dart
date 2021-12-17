@@ -164,14 +164,14 @@ class QueryMethodWriter implements Writer {
     final flattenedReturnTypeElement = _queryMethod.flattenedReturnType.element;
     if (flattenedReturnTypeElement is ClassElement) {
       final tableName = flattenedReturnTypeElement.tableName();
-      sql = sql.replaceAll(r'$table_name_of_return_type', tableName);
+      sql = sql.replaceAll(r'$table_name', tableName);
     } else {
-      if (sql.contains(r'$table_name_of_return_type')) {
+      if (sql.contains(r'$table_name')) {
         throw ProcessorError(
           message:
-          r'The $table_name_of_return_type variable in the query string cannot be used when the method return is not an entity',
+          r'The $table_name variable in the query string cannot be used when the method return is not an entity',
           todo:
-          r'Make the de value return one entity or remove $table_name_of_return_type in query string.',
+          r'Make the de value return one entity or remove $table_name in query string.',
           element: flattenedReturnTypeElement ?? _queryMethod.rawReturnType.element!,
         );
       }
