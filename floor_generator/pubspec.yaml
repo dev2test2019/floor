@@ -16,7 +16,7 @@ dependencies:
   code_builder: ^4.1.0
   collection: ^1.15.0
   floor_annotation:
-    path: floor/floor_annotation/
+    path: ../floor_annotation/
   meta: ^1.7.0
   source_gen: ^1.1.0
   strings: ^0.2.1
