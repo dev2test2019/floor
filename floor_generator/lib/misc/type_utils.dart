@@ -1,3 +1,4 @@
+// ignore_for_file: import_of_legacy_library_into_null_safe
 import 'dart:typed_data';
 
 import 'package:analyzer/dart/constant/value.dart';
@@ -25,20 +26,6 @@ extension SupportedTypeChecker on DartType {
   }
 }
 
-extension ClassElementExtension on ClassElement {
-  String tableName() {
-    final DartObject? annotation = getAnnotation(annotations.Entity);
-    // ignore: unnecessary_null_comparison
-    if (annotation == null) {
-      return '';
-    }
-    return
-      annotation.getField(AnnotationField.entityTableName)
-          ?.toStringValue() ??
-          displayName;
-  }
-}
-
 extension Uint8ListTypeChecker on DartType {
   bool get isUint8List =>
       getDisplayString(withNullability: false) == 'Uint8List';
@@ -59,10 +46,23 @@ extension AnnotationChecker on Element {
     return _typeChecker(type).hasAnnotationOfExact(this);
   }
 
-  /// Returns the first annotation object found of [type]
-  /// or `null` if annotation of [type] not found
-  DartObject? getAnnotation(final Type type) {
+  /// Returns the first annotation object found on [type]
+  DartObject getAnnotation(final Type type) {
     return _typeChecker(type).firstAnnotationOfExact(this);
+  }
+}
+
+extension ClassElementExtension on ClassElement {
+  String tableName() {
+    final DartObject? annotation = getAnnotation(annotations.Entity);
+    // ignore: unnecessary_null_comparison
+    if (annotation == null) {
+      return '';
+    }
+    return
+      annotation.getField(AnnotationField.entityTableName)
+        ?.toStringValue() ??
+        displayName;
   }
 }
 
